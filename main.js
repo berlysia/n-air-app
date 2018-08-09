@@ -201,7 +201,9 @@ function startApp() {
   mainWindow.on('closed', () => {
     require('node-libuiohook').stopHook();
     session.defaultSession.flushStorageData();
+    getObs().OBS_service_removeCallback();
     getObs().OBS_API_destroyOBS_API();
+    getObs().IPC.disconnect();
     app.quit();
   });
 
@@ -291,7 +293,8 @@ function startApp() {
     // }, 10 * 1000);
 
   }
-
+  
+  getObs().IPC.ConnectOrHost("slobs" + uuid());
   // Initialize various OBS services
   getObs().SetWorkingDirectory(
     path.join(app.getAppPath().replace('app.asar', 'app.asar.unpacked') +
