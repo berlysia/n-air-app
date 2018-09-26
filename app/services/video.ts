@@ -72,7 +72,7 @@ export class Display {
     nodeObs.OBS_content_setPaddingColor(name, 5, 14, 24);
 
     // ソースの枠線の色
-    nodeObs.OBS_content_setOutlineColor(name, 255, 105, 82);
+    // nodeObs.OBS_content_setOutlineColor(name, 255, 105, 82);
 
     // ソースから十字に伸びる線の色
     nodeObs.OBS_content_setGuidelineColor(name, 255, 105, 82);
