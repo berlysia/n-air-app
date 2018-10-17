@@ -1,6 +1,6 @@
 import { getClient } from '../helpers/api-client';
 import { CustomizationService } from '../../app/services/customization';
-import { getConfigsVariations, getConfig } from './utils';
+import { getConfigsVariations, getConfig, branchNameToDirName, dirNameToBranchName } from './utils';
 import test from 'ava';
 import { sleep } from '../helpers/sleep';
 import { focusChild } from '../helpers/spectron/index';
@@ -70,7 +70,7 @@ export async function makeScreenshots(t: any, options: IScreentestOptions) {
     await t.context.app.browserWindow.capturePage().then((imageBuffer: ArrayBuffer) => {
       const testName = t['_test'].title.replace('afterEach for ', '');
       const imageFileName = `${testName}__${configInd}.png`;
-      fs.writeFileSync(`${CONFIG.dist}/${branchName}/${imageFileName}`, imageBuffer);
+      fs.writeFileSync(`${CONFIG.dist}/${branchNameToDirName(branchName)}/${imageFileName}`, imageBuffer);
     });
   }
 
@@ -84,14 +84,16 @@ export function useScreentest(options: IScreentestOptions = { window: 'main' }) 
 
   const currentBranchFile = `${CONFIG.dist}/current-branch.txt`;
   if (fs.existsSync(currentBranchFile)) {
-    branchName = fs.readFileSync(currentBranchFile).toString();
+    branchName = dirNameToBranchName(fs.readFileSync(currentBranchFile).toString());
   } else {
     branchName = CONFIG.baseBranch;
   }
 
   // create dirs
   if (!fs.existsSync(CONFIG.dist)) fs.mkdirSync(CONFIG.dist);
-  if (!fs.existsSync(`${CONFIG.dist}/${branchName}`)) fs.mkdirSync(`${CONFIG.dist}/${branchName}/`);
+  if (!fs.existsSync(`${CONFIG.dist}/${branchNameToDirName(branchName)}`)) {
+    fs.mkdirSync(`${CONFIG.dist}/${branchNameToDirName(branchName)}`);
+  }
 
   test.afterEach(async t => {
     await makeScreenshots(t, options);

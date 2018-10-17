@@ -1,6 +1,7 @@
 const rimraf = require('rimraf');
 const { execSync } = require('child_process');
 const fs = require('fs');
+import { branchNameToDirName } from './utils';
 
 const CONFIG = JSON.parse(fs.readFileSync('test/screentest/config.json'));
 
@@ -18,12 +19,11 @@ const returnCode = (function main() {
 
   // create dir
   let currentPath = '';
-  dir.split('/').forEach(dirName => {
+  dir.split('/').forEach((dirName: string) => {
     currentPath += dirName;
     if (!fs.existsSync(currentPath)) fs.mkdirSync(currentPath);
     currentPath += '/';
   });
-
 
 
   for (const branchName of branches) {
@@ -50,7 +50,7 @@ const returnCode = (function main() {
 
     log('creating screenshots');
     try {
-      execSync(`yarn ava test-dist/test/screentest/tests`);
+      execSync('yarn ava test-dist/test/screentest/tests');
     } catch (e) {
       err('creating screenshots failed');
       return 1;
@@ -79,16 +79,16 @@ if (returnCode !== 0) {
 checkoutBranch(branches[0]);
 
 
-function log(...args) {
+function log(...args: any[]) {
   console.log(...args);
 }
 
-function err(...args) {
+function err(...args: any[]) {
   console.error(...args);
 }
 
-function checkoutBranch(branchName) {
-  const branchPath = `${CONFIG.dist}/${branchName}`;
+function checkoutBranch(branchName: string) {
+  const branchPath = `${CONFIG.dist}/${branchNameToDirName(branchName)}`;
   if (!fs.existsSync(branchPath)) fs.mkdirSync(branchPath);
   if (branchName !== 'current') {
     log(`checkout ${branchName}`);

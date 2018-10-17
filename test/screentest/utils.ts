@@ -7,6 +7,14 @@ export function getConfig() {
   return JSON.parse(fs.readFileSync('test/screentest/config.json'));
 }
 
+export function branchNameToDirName(branchName: string) {
+  return branchName.replace(/\//g, '_$_');
+}
+
+export function dirNameToBranchName(branchName: string) {
+  return branchName.replace(/_\$_/g, '/');
+}
+
 /**
  * get set of unique configs
  */

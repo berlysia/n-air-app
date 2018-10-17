@@ -1,15 +1,16 @@
 const fs = require('fs');
 const PNG = require('pngjs').PNG;
 const pixelmatch = require('pixelmatch');
-import { getConfigsVariations, getConfig } from './utils';
+import { getConfigsVariations, getConfig, branchNameToDirName } from './utils';
 
 const CONFIG = getConfig();
 const branches = process.argv.slice(2, 4);
 const [newBranchName, baseBranchName] = branches;
+const [newBranchDir, baseBranchDir] = branches.map(branchNameToDirName);
 
 console.log('branches to compare:', branches);
 
-const images = fs.readdirSync(`${CONFIG.dist}/${newBranchName}`);
+const images = fs.readdirSync(`${CONFIG.dist}/${newBranchDir}`);
 
 interface IState {
   regressions: {[imageName: string]: IRegression};
@@ -67,8 +68,8 @@ const parsedImages: {[imageName: string]: IParsedImage } = {};
 
     for (const image of images) {
       state.totalScreens++;
-      const baseImage = `${CONFIG.dist}/${baseBranchName}/${image}`;
-      const branchImage = `${CONFIG.dist}/${newBranchName}/${image}`;
+      const baseImage = `${CONFIG.dist}/${baseBranchDir}/${image}`;
+      const branchImage = `${CONFIG.dist}/${newBranchDir}/${image}`;
       const diffImage = `${CONFIG.dist}/diff/${image}`;
       const isNew = !fs.existsSync(baseImage);
       const [name, restFileName] = image.split('__');
@@ -128,8 +129,8 @@ const parsedImages: {[imageName: string]: IParsedImage } = {};
   // replace paths for images
   for (const image of images) {
     const regression = state.regressions[image];
-    regression.baseImage = `${baseBranchName}/${image}`;
-    regression.branchImage = `${newBranchName}/${image}`;
+    regression.baseImage = `${baseBranchDir}/${image}`;
+    regression.branchImage = `${newBranchDir}/${image}`;
     regression.diffImage = `diff/${image}`;
   }
 
