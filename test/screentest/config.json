@@ -1,5 +1,5 @@
 {
-  "baseBranch": "staging",
+  "baseBranch": "n-air_development",
   "dist": "test-dist/screentest",
   "configs": {
     "resolution": {
