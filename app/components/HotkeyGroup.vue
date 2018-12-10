@@ -17,7 +17,7 @@
       v-show="!collapsed"
       class="section-content section-content--dropdown"
   >
-    <hotkey v-for="hotkey in hotkeys" :hotkey="hotkey" />
+    <hotkey v-for="hotkey in hotkeys" :hotkey="hotkey" :key="hotkey.name" />
   </div>
 </div>
 </template>

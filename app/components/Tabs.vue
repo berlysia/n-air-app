@@ -6,6 +6,7 @@
         class="Tabs-tab"
         :class="{ 'Tabs-tab__active': tab.value === selected }"
         v-for="tab in tabs"
+        :key="tab.name"
         @click="showTab(tab.value)">
         {{ tab.name }}
       </li>
