@@ -69,13 +69,13 @@ export class Display {
     });
 
     // 映像部分以外の色
-    nodeObs.OBS_content_setPaddingColor(name, 31, 34, 45);
+    nodeObs.OBS_content_setPaddingColor(name, 31, 34, 45, 0);
 
     // ソースの枠線の色
-    nodeObs.OBS_content_setOutlineColor(name, 255, 105, 82);
+    // nodeObs.OBS_content_setOutlineColor(name, 255, 105, 82);
 
     // ソースから十字に伸びる線の色
-    nodeObs.OBS_content_setGuidelineColor(name, 255, 105, 82);
+    nodeObs.OBS_content_setGuidelineColor(name, 255, 105, 82, 0);
 
     if (options.paddingSize != null) {
       nodeObs.OBS_content_setPaddingSize(name, options.paddingSize);

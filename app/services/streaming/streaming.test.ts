@@ -109,6 +109,9 @@ const createToggleStreamingInjectees = ({
         RecordWhenStreaming,
         KeepRecordingWhenStreamStops,
       }
+    },
+    getStreamEncoderSettings() {
+      return {};
     }
   },
   UserService: {
