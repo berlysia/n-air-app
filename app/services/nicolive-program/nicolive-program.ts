@@ -437,7 +437,7 @@ export class NicoliveProgramService extends StatefulService<INicoliveProgramStat
     // 動作すべき状態になる OR 終了時刻が変わったら再設定
     if ((next && !prev) || (next && endTimeUpdated)) {
       clearTimeout(this.autoExtensionTimer);
-      const timeout = (nextState.endTime - 5 * 60) * 1000 - now;
+      const timeout = (nextState.endTime - 27 * 60) * 1000 - now;
       // 5分前をすでに過ぎていたら即延長
       if (timeout <= 0) {
         this.extendProgramForAutoExtension(nextState);
@@ -447,7 +447,7 @@ export class NicoliveProgramService extends StatefulService<INicoliveProgramStat
         }, timeout);
         console.log(
           '自動延長タイマーが（再）設定されました ',
-          Math.floor(((nextState.endTime - 5 * 60) * 1000 - now) / 1000),
+          Math.floor(((nextState.endTime - 27 * 60) * 1000 - now) / 1000),
           '秒後に自動延長します'
         );
       }
