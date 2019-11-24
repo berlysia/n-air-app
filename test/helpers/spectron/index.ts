@@ -66,12 +66,15 @@ export function useSpectron(options: ITestRunnerOptions) {
         path.join(__dirname, 'context-menu-injected.js'),
         '--require',
         path.join(__dirname, 'dialog-injected.js'),
-        '.'
+        '.',
       ],
       env: {
         NODE_ENV: 'test',
-        NAIR_CACHE_DIR: t.context.cacheDir
-      }
+        NAIR_CACHE_DIR: t.context.cacheDir,
+      },
+      webdriverOptions: {
+        deprecationWarnings: false,
+      },
     });
 
     if (options.beforeAppStartCb) await options.beforeAppStartCb(t);
@@ -122,6 +125,7 @@ export function useSpectron(options: ITestRunnerOptions) {
   }
 
   test.beforeEach(async t => {
+    // @ts-ignore
     t.context.app = app;
     if (options.restartAppAfterEachTest || !appIsRunning) await startApp(t);
   });
