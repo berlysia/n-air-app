@@ -68,6 +68,7 @@ test('Recording via API', async t => {
   const outputSettings = settingsService.getSettingsFormData('Output');
   outputSettings.forEach(subcategory => {
     subcategory.parameters.forEach(setting => {
+      // @ts-ignore
       if (setting.name === 'FilePath') setting.value = t.context.cacheDir;
     });
   });

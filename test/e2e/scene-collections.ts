@@ -44,9 +44,14 @@ useSpectron({
  */
 test('Loading an old scene collection', async t => {
   // Make sure we loaded the scenes
+  // @ts-ignore
   t.true(await t.context.app.client.isExisting('li=Stream Starting Soon'));
+  // @ts-ignore
   t.true(await t.context.app.client.isExisting('li=Live Screen'));
+  // @ts-ignore
   t.true(await t.context.app.client.isExisting('li=Intermission'));
+  // @ts-ignore
   t.true(await t.context.app.client.isExisting('li=Be Right Back'));
+  // @ts-ignore
   t.true(await t.context.app.client.isExisting('li=Stream Ending Soon'));
 });
