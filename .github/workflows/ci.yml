@@ -20,7 +20,7 @@ jobs:
               ${{ runner.os }}-n-air-
         - run: yarn install
         - run: yarn compile:ci
-        - run: yarn test:unit
+        # - run: yarn test:unit
         - run: yarn test
         - name: Cleanup cache for size limitation
           if: steps.cache.outputs.cache-hit != 'true'

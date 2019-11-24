@@ -131,6 +131,14 @@ export function useSpectron(options: ITestRunnerOptions) {
   });
 
   test.afterEach.always(async t => {
+    app.client.getRenderProcessLogs().then((logs: any[]) => {
+      logs.forEach(log => {
+        console.log(log.message);
+        console.log(log.source);
+        console.log(log.level);
+      });
+    });
+
     const client = await getClient();
     await client.unsubscribeAll();
     if (options.restartAppAfterEachTest) {

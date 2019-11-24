@@ -25,7 +25,7 @@
     "release": "yarn install --cwd bin && node bin/release/mini-release.js",
     "patch-note": "node bin/release/generatePatchNote.js",
     "webfont": "yarn install --cwd bin && node bin/generate-webfont.js",
-    "test": "node bin/i18n-early-check.js && tsc -p test && ava -v",
+    "test": "node bin/i18n-early-check.js && tsc -p test &&  ava -v test-dist/test/e2e/scenes.js test-dist/test/api/scenes.js",
     "test:unit": "yarn test:unit:app && yarn test:unit:bin",
     "test:unit:app": "jest --silent --config ./jest.config.js",
     "test:unit:bin": "jest --silent --config ./jest.bin-config.js",
