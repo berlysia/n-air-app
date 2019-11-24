@@ -16,7 +16,6 @@ jobs:
             key: ${{ runner.os }}-n-air-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
             restore-keys:
               ${{ runner.os }}-n-air-
-        - run: npm install -g yarn
         - run: yarn install
         - run: yarn compile:ci
         - run: yarn test:unit
