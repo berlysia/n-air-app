@@ -10,9 +10,11 @@ jobs:
         - uses: actions/setup-node@v1
           with:
             node-version: '10.x'
+        - id: yarn-cache
+          run: echo "::set-output name=dir::$(yarn cache dir)"
         - uses: actions/cache@v1
           with:
-            path: ~/.cache/yarn
+            path: ${{ steps.yarn-cache.outputs.dir }}
             key: ${{ runner.os }}-n-air-${{ hashFiles(format('{0}{1}', github.workspace, '/yarn.lock')) }}
             restore-keys:
               ${{ runner.os }}-n-air-
@@ -20,3 +22,6 @@ jobs:
         - run: yarn compile:ci
         - run: yarn test:unit
         - run: yarn test
+        - name: Cleanup cache for size limitation
+          if: steps.cache.outputs.cache-hit != 'true'
+          run: cd $(yarn cache dir); rm -r npm-electron-*
